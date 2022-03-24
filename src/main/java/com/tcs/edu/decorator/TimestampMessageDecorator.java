@@ -13,9 +13,10 @@ public class TimestampMessageDecorator {
     /**
      * Method for outputting messages + system clock to console.
      * Side effect: print message + system clock value in console.
+     *
      * @param message string value for outputting to console.
      */
-    public static void decorate(String message) {
-        System.out.println(Instant.now() + " " +  message);
+    public static String decorate(String message) {
+        return (Instant.now() + " " + message);
     }
 }
