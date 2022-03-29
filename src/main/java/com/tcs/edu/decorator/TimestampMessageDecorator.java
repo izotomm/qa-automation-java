@@ -17,6 +17,7 @@ public class TimestampMessageDecorator {
      * @param message string value for outputting to console.
      */
     public static String decorate(String message) {
-        return (Instant.now() + " " + message);
+        String decoratedMessage = (Instant.now() + " " + message);
+        return decoratedMessage;
     }
 }
