@@ -19,8 +19,8 @@ public class TimestampMessageDecorator {
     public static int messageCount = 1;
 
     public static String decorate(String message) {
-
-        var decoratedMessage = messageCount + (" " + Instant.now() + " " + message);
+        final var decoratedMessage = messageCount + (" " + Instant.now() + " " + message);
         return decoratedMessage;
     }
+
 }

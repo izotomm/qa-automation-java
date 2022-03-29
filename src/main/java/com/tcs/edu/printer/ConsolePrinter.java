@@ -17,7 +17,7 @@ public class ConsolePrinter {
      * @param message string value for outputting to console.
      */
     public static void print(String message) {
-        messageCount ++;
+        messageCount++;
         System.out.println(message);
     }
 }
