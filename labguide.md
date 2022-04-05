@@ -99,7 +99,7 @@ mvn clean verify
 ```
 - [ ] Выполните запуск приложения из текущей папки labguide
 ```shell
- java -classpath target/app-1.0-SNAPSHOT.jar com.tcs.edu.Application
+ java -classpath target/app-1.0-SNAPSHOT.jar Application
 ```
 
 
@@ -138,7 +138,7 @@ Hello world!
 
 Как проверить
 -------------
-- [ ] В IDEA откройте класс com.tcs.edu.Application
+- [ ] В IDEA откройте класс Application
 - [ ] Найдите использование класса com.tcs.edu.printer.ConsolePrinter
 - [ ] Активируйте функцию Quick Documentation
 
@@ -165,18 +165,18 @@ Hello world!
 
 Задачи
 ------
-- [ ] Добавить для класса `com.tcs.edu.Application` директиву `package com.tcs.edu`
+- [ ] Добавить для класса `Application` директиву `package com.tcs.edu`
 - [ ] Добавить для класса `com.tcs.edu.printer.ConsolePrinter` директиву `package com.tcs.edu.printer`
-- [ ] В классе `com.tcs.edu.Application` использовать второй класс по его полному имени: добавить директиву `import com.tcs.edu.printer.com.tcs.edu.printer.ConsolePrinter`
+- [ ] В классе `Application` использовать второй класс по его полному имени: добавить директиву `import com.tcs.edu.printer.com.tcs.edu.printer.ConsolePrinter`
 - [ ] Выполните из консоли запуск приложения
 ```shell
- java -classpath target/app-1.0-SNAPSHOT.jar com.tcs.edu.com.tcs.edu.Application
+ java -classpath target/app-1.0-SNAPSHOT.jar com.tcs.edu.Application
 ```
 
 Как проверить
 -------------
 - [ ] Приложение успешно компилируется
-- [ ] При запуске класса `com.tcs.edu.Application` видим вывод в консоль
+- [ ] При запуске класса `Application` видим вывод в консоль
 ```shell
 Hello World!
 ```
@@ -287,7 +287,7 @@ Hello World!
 -------------
 - [ ] Для проверки корректности работы программы с состоянием необходимо воспроизвести необходимое состояние
 - Единичного вывода теперь недостаточно
-- Измените тестовый класс com.tcs.edu.Application, чтобы было более одного вывода сообщения
+- Измените тестовый класс Application, чтобы было более одного вывода сообщения
 - [ ] Убедитесь в корректности вывода счетчика
 ```shell
 1 2022-03-04T05:29:23.020171Z Hello world!

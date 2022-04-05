@@ -7,6 +7,5 @@ class Application {
             ConsolePrinter.print(TimestampMessageDecorator.decorate("Hello world!"));
         }
     }
-
 }
 
