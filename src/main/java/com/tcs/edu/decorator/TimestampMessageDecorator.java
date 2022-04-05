@@ -16,7 +16,11 @@ public class TimestampMessageDecorator {
      *
      * @param message string value for outputting to console.
      */
+    public static int messageCount = 1;
+
     public static String decorate(String message) {
-        return (Instant.now() + " " + message);
+        final var decoratedMessage = messageCount + (" " + Instant.now() + " " + message);
+        return decoratedMessage;
     }
+
 }
