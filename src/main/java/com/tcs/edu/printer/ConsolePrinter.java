@@ -19,5 +19,5 @@ public class ConsolePrinter {
     public static void print(String message) {
         messageCount++;
         System.out.println(message);
-    }
+}
 }
