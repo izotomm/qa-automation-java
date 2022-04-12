@@ -1,7 +1,5 @@
 package com.tcs.edu.printer;
 
-import static com.tcs.edu.decorator.TimestampMessageDecorator.messageCount;
-
 /**
  * Message handling class.
  *
@@ -17,7 +15,6 @@ public class ConsolePrinter {
      * @param message string value for outputting to console.
      */
     public static void print(String message) {
-        messageCount++;
         System.out.println(message);
     }
 }
