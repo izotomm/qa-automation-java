@@ -14,15 +14,17 @@ public class MessageService {
     public static int messageCount = 0;
     public static final int PAGE_SIZE = 2;
 
-    public static void process(Severity level, String message) {
-        messageCount++;
-        String messageTimestampDecorate = TimestampMessageDecorator.timestampDecorate(message);
-        String severityLevel = SeverityDecoration.severityDecorate(level);
-        String glued = String.format("%s %s", messageTimestampDecorate, severityLevel);
-        if (messageCount % PAGE_SIZE == 0) {
-            glued = glued + "\n ---";
+    public static void process(Severity level, String... messages) {
+        for (String currentMessages : messages) {
+            messageCount++;
+            String messageTimestampDecorate = TimestampMessageDecorator.timestampDecorate(currentMessages);
+            String severityLevel = SeverityDecoration.severityDecorate(level);
+            String glued = String.format("%s %s", messageTimestampDecorate, severityLevel);
+            if (messageCount % PAGE_SIZE == 0) {
+                glued = glued + "\n ---";
+            }
+            print(glued);
         }
-        print(glued);
     }
 
 }
