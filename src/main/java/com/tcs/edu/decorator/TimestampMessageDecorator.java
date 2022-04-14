@@ -2,7 +2,7 @@ package com.tcs.edu.decorator;
 
 import java.time.Instant;
 
-import static com.tcs.edu.messageService.MessageService.messageCount;
+import static com.tcs.edu.decorator.gluedMessage.messageCount;
 
 /**
  * Message timestamp enrichment class.
@@ -14,7 +14,6 @@ import static com.tcs.edu.messageService.MessageService.messageCount;
 public class TimestampMessageDecorator {
     /**
      * Method for outputting messages + system clock to console.
-     * Side effect: print message + system clock value in console.
      */
 
     public static String timestampDecorate(String message) {
