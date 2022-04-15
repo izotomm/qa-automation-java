@@ -2,7 +2,7 @@ package com.tcs.edu.decorator;
 
 import java.time.Instant;
 
-import static com.tcs.edu.decorator.gluedMessage.messageCount;
+import static com.tcs.edu.decorator.GluedMessage.messageCount;
 
 /**
  * Message timestamp enrichment class.

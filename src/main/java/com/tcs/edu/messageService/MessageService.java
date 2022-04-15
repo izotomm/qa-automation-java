@@ -1,6 +1,6 @@
 package com.tcs.edu.messageService;
 
-import com.tcs.edu.decorator.gluedMessage;
+import com.tcs.edu.decorator.GluedMessage;
 import com.tinkoff.edu.decorator.Severity;
 
 /**
@@ -9,9 +9,9 @@ import com.tinkoff.edu.decorator.Severity;
 public class MessageService {
 
     public static void process(Severity level, String message, String... messages) {
-        gluedMessage.glueMessage(message, level);
+        GluedMessage.printGluedMessage(message, level);
         for (String currentMessages : messages) {
-            gluedMessage.glueMessage(currentMessages, level);
+            GluedMessage.printGluedMessage(currentMessages, level);
         }
     }
 }

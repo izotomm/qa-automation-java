@@ -12,7 +12,7 @@ import static com.tcs.edu.printer.ConsolePrinter.print;
  * @version 1.0
  */
 
-public class gluedMessage {
+public class GluedMessage {
     public static final int PAGE_SIZE = 2;
     public static int messageCount = 0;
 
@@ -20,7 +20,7 @@ public class gluedMessage {
      * Method for glue Message.
      * Side effect: print message in console.
      */
-    public static void glueMessage(String message, Severity level) {
+    public static void printGluedMessage(String message, Severity level) {
         messageCount++;
         String messageTimestampDecorate = TimestampMessageDecorator.timestampDecorate(message);
         String severityLevel = SeverityDecoration.severityDecorate(level);
