@@ -21,13 +21,15 @@ public class GluedMessage {
      * Side effect: print message in console.
      */
     public static void printGluedMessage(String message, Severity level) {
-        messageCount++;
-        String messageTimestampDecorate = TimestampMessageDecorator.timestampDecorate(message);
-        String severityLevel = SeverityDecoration.severityDecorate(level);
-        String glued = String.format("%s %s", messageTimestampDecorate, severityLevel);
-        if (messageCount % PAGE_SIZE == 0) {
-            glued = glued + "\n ---";
+        if (message != null && level != null) {
+            messageCount++;
+            String messageTimestampDecorate = TimestampMessageDecorator.timestampDecorate(message);
+            String severityLevel = SeverityDecoration.severityDecorate(level);
+            String glued = String.format("%s %s", messageTimestampDecorate, severityLevel);
+            if (messageCount % PAGE_SIZE == 0) {
+                glued = glued + "\n ---";
+            }
+            print(glued);
         }
-        print(glued);
     }
 }
