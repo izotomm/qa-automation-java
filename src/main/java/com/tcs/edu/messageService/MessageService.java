@@ -1,9 +1,14 @@
 package com.tcs.edu.messageService;
 
 import com.tcs.edu.decorator.GluedMessage;
+import com.tinkoff.edu.decorator.Doubling;
 import com.tinkoff.edu.decorator.MessageOrder;
 import com.tinkoff.edu.decorator.Severity;
 
+import java.util.Objects;
+
+import static com.tinkoff.edu.decorator.Doubling.DISTINCT;
+import static com.tinkoff.edu.decorator.Doubling.DOUBLES;
 import static com.tinkoff.edu.decorator.MessageOrder.ASC;
 import static com.tinkoff.edu.decorator.MessageOrder.DESC;
 
@@ -42,6 +47,62 @@ public class MessageService {
         }
     }
 
+    /**
+     * Вариант печати с Doubling и MessageOrder
+     */
+    public static void process(Severity level, MessageOrder order, Doubling doubling, String message, String... messages) {
+
+        //массив данных для сообщений
+        String[] printMessages = new String[messages.length + 1];
+
+        if (doubling == DISTINCT) {
+
+            if (order == DESC) {
+                //вывод сообщений в обратной последовательности + убрать повторы
+                for (int counterMessages = messages.length - 1; counterMessages >= 0; counterMessages--) {
+                    //проверка если ли в массиве уже сообщение
+                    if (!MessageService.isMessagePrinted(messages[counterMessages], printMessages)) {
+                        GluedMessage.printGluedMessage(messages[counterMessages], level);
+                        //пихаю сообщение в массив
+                        printMessages[counterMessages] = messages[counterMessages];
+                    }
+
+                }
+                //тут вывожу сообщение которое не в варрарге, сначала проверка на дубликат, потом печать
+                if (!MessageService.isMessagePrinted(message, printMessages)) {
+                    GluedMessage.printGluedMessage(message, level);
+                }
+            }
+            if (order == ASC) {
+                //вывод сообщения не в варарге + засовываю это сообещение в массив
+                GluedMessage.printGluedMessage(message, level);
+                printMessages[messages.length] = message;
+
+                //тут перебираю сообщения в варрге, печатаю и засовываю их в массив
+                for (int counterMessages = 0; counterMessages <= messages.length - 1; counterMessages++) {
+                    if (!MessageService.isMessagePrinted(messages[counterMessages], printMessages)) {
+                        GluedMessage.printGluedMessage(messages[counterMessages], level);
+                        printMessages[counterMessages] = messages[counterMessages];
+                    }
+                }
+            }
+            //вариант когда дубликаты сообщений уберить не нужно но был передан параметр doubling
+        } else if (doubling == DOUBLES) {
+            MessageService.process(level, order, message, messages);
+        }
+    }
+
+    /**
+     * метод проверки сообщения в массиве
+     */
+    private static boolean isMessagePrinted(String message, String... printed) {
+        for (String printedMessage : printed)
+            if (Objects.equals(message, printedMessage)) {
+                return true;
+            }
+        return false;
+
+    }
 
 }
 
