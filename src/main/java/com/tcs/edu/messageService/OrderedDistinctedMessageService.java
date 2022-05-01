@@ -20,8 +20,14 @@ import static com.tinkoff.edu.decorator.MessageOrder.DESC;
  * API
  */
 public class OrderedDistinctedMessageService implements MessageService {
-    MessageDecorator decorator = new TimestampMessageDecorator();
-    Printer printer = new ConsolePrinter();
+    MessageDecorator decorator;
+    Printer printer;
+
+    public OrderedDistinctedMessageService(TimestampMessageDecorator timestampMessageDecorator,
+                                           ConsolePrinter consolePrinter) {
+        this.printer = consolePrinter;
+        this.decorator = timestampMessageDecorator;
+    }
 
     /**
      * Вариант печати без MessageOrder и Doubling (базовый)
