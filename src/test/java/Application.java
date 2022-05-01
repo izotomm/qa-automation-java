@@ -1,5 +1,6 @@
 import com.tcs.edu.domain.Message;
-import com.tcs.edu.messageService.MessageService;
+import com.tcs.edu.interfaces.MessageService;
+import com.tcs.edu.messageService.OrderedDistinctedMessageService;
 import com.tinkoff.edu.decorator.Severity;
 
 import static com.tinkoff.edu.decorator.Doubling.DISTINCT;
@@ -15,9 +16,10 @@ class Application {
                 new Message(severity, "Hello world!2")
         };
         Message message = new Message(severity, "Hello world!");
-        MessageService.log(message, messages);
-        MessageService.log(DESC, message, messages);
-        MessageService.log(DESC, DISTINCT, message, messages);
+        MessageService service = new OrderedDistinctedMessageService();
+        service.log(message, messages);
+        service.log(DESC, message, messages);
+        service.log(DESC, DISTINCT, message, messages);
     }
 }
 
