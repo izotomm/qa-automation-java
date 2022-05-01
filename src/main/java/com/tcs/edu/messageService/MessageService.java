@@ -1,9 +1,9 @@
 package com.tcs.edu.messageService;
 
 import com.tcs.edu.decorator.GluedMessage;
+import com.tcs.edu.domain.Message;
 import com.tinkoff.edu.decorator.Doubling;
 import com.tinkoff.edu.decorator.MessageOrder;
-import com.tinkoff.edu.decorator.Severity;
 
 import java.util.Objects;
 
@@ -21,28 +21,29 @@ public class MessageService {
     /**
      * Вариант печати без MessageOrder и Doubling (базовый)
      */
-    public static void process(Severity level, String message, String... messages) {
-        GluedMessage.printGluedMessage(message, level);
-        for (String currentMessages : messages) {
-            GluedMessage.printGluedMessage(currentMessages, level);
+    public static void log(Message message, Message... messages) {
+        GluedMessage.printGluedMessage(message);
+        for (Message currentMessage : messages) {
+            GluedMessage.printGluedMessage(currentMessage);
         }
     }
+
 
     /**
      * Вариант печати без Doubling но с MessageOrder
      */
-    public static void process(Severity level, MessageOrder order, String message, String... messages) {
+    public static void log(MessageOrder order, Message message, Message... messages) {
 
         if (order == DESC) {
             //тут вывожу сообщения которые в варрарге задом наперед
             for (int counterMessages = messages.length - 1; counterMessages >= 0; counterMessages--) {
-                GluedMessage.printGluedMessage(messages[counterMessages], level);
+                GluedMessage.printGluedMessage(messages[counterMessages]);
             }
             //тут вывожу сообщение которое не в варрарге
-            GluedMessage.printGluedMessage(message, level);
+            GluedMessage.printGluedMessage(message);
         } else if (order == ASC) {
             //тут использую process без order чтовы вывести сообщения в заданом порядке
-            MessageService.process(level, message, messages);
+            MessageService.log(message, messages);
 
         }
     }
@@ -50,7 +51,7 @@ public class MessageService {
     /**
      * Вариант печати с Doubling и MessageOrder
      */
-    public static void process(Severity level, MessageOrder order, Doubling doubling, String message, String... messages) {
+    public static void log(MessageOrder order, Doubling doubling, Message message, Message... messages) {
 
         //массив данных для сообщений
         String[] printMessages = new String[messages.length + 1];
@@ -62,47 +63,48 @@ public class MessageService {
                 for (int counterMessages = messages.length - 1; counterMessages >= 0; counterMessages--) {
                     //проверка если ли в массиве уже сообщение
                     if (!MessageService.isMessagePrinted(messages[counterMessages], printMessages)) {
-                        GluedMessage.printGluedMessage(messages[counterMessages], level);
+                        GluedMessage.printGluedMessage(messages[counterMessages]);
                         //пихаю сообщение в массив
-                        printMessages[counterMessages] = messages[counterMessages];
+                        printMessages[counterMessages] = messages[counterMessages].getBody();
                     }
 
                 }
                 //тут вывожу сообщение которое не в варрарге, сначала проверка на дубликат, потом печать
                 if (!MessageService.isMessagePrinted(message, printMessages)) {
-                    GluedMessage.printGluedMessage(message, level);
+                    GluedMessage.printGluedMessage(message);
                 }
             }
             if (order == ASC) {
                 //вывод сообщения не в варарге + засовываю это сообещение в массив
-                GluedMessage.printGluedMessage(message, level);
-                printMessages[messages.length] = message;
+                GluedMessage.printGluedMessage(message);
+                printMessages[messages.length] = message.getBody();
 
                 //тут перебираю сообщения в варрге, печатаю и засовываю их в массив
                 for (int counterMessages = 0; counterMessages <= messages.length - 1; counterMessages++) {
                     if (!MessageService.isMessagePrinted(messages[counterMessages], printMessages)) {
-                        GluedMessage.printGluedMessage(messages[counterMessages], level);
-                        printMessages[counterMessages] = messages[counterMessages];
+                        GluedMessage.printGluedMessage(messages[counterMessages]);
+                        printMessages[counterMessages] = messages[counterMessages].getBody();
                     }
                 }
             }
             //вариант когда дубликаты сообщений уберить не нужно но был передан параметр doubling
         } else if (doubling == DOUBLES) {
-            MessageService.process(level, order, message, messages);
+            MessageService.log(order, message, messages);
         }
     }
 
     /**
      * метод проверки сообщения в массиве
      */
-    private static boolean isMessagePrinted(String message, String... printed) {
+    private static boolean isMessagePrinted(Message message, String... printed) {
         for (String printedMessage : printed)
-            if (Objects.equals(message, printedMessage)) {
+            if (Objects.equals(message.getBody(), printedMessage)) {
                 return true;
             }
         return false;
 
     }
+
 
 }
 

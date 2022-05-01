@@ -1,7 +1,7 @@
 package com.tcs.edu.decorator;
 
 
-import com.tinkoff.edu.decorator.Severity;
+import com.tcs.edu.domain.Message;
 
 import static com.tcs.edu.printer.ConsolePrinter.print;
 
@@ -20,11 +20,11 @@ public class GluedMessage {
      * Method for glue Message.
      * Side effect: print message in console.
      */
-    public static void printGluedMessage(String message, Severity level) {
-        if (message != null && level != null) {
+    public static void printGluedMessage(Message message) {
+        if (message.getBody() != null && message.getSeverity() != null) {
             messageCount++;
-            String messageTimestampDecorate = TimestampMessageDecorator.timestampDecorate(message);
-            String severityLevel = SeverityDecoration.severityDecorate(level);
+            String messageTimestampDecorate = TimestampMessageDecorator.timestampDecorate(message.getBody());
+            String severityLevel = SeverityDecoration.severityDecorate(message.getSeverity());
             String glued = String.format("%s %s", messageTimestampDecorate, severityLevel);
             if (messageCount % PAGE_SIZE == 0) {
                 glued = glued + "\n ---";
