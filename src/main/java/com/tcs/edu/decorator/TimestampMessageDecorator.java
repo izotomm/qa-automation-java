@@ -2,6 +2,7 @@ package com.tcs.edu.decorator;
 
 import com.tcs.edu.domain.Message;
 import com.tcs.edu.interfaces.MessageDecorator;
+import com.tcs.edu.validated.ValidatedService;
 
 import java.time.Instant;
 
@@ -12,7 +13,7 @@ import java.time.Instant;
  * @version 2.0
  */
 
-public class TimestampMessageDecorator implements MessageDecorator {
+public class TimestampMessageDecorator extends ValidatedService implements MessageDecorator {
 
     public static final int PAGE_SIZE = 2;
     public static int messageCount = 0;
@@ -22,7 +23,7 @@ public class TimestampMessageDecorator implements MessageDecorator {
      * Method for outputting messages + system clock.
      */
     public String timestampDecorate(Message message) {
-        if (message.getBody() != null && message.getSeverity() != null) {
+        if (super.isArgsValid(message)) {
             messageCount++;
             String messageTimestampDecorate = String.format("%d %s %s", messageCount, Instant.now(), message.getBody());
             String severityLevel = decoration.severityDecorate(message.getSeverity());
@@ -32,8 +33,8 @@ public class TimestampMessageDecorator implements MessageDecorator {
             }
             return glued;
         }
-
         return null;
+
     }
 
 }

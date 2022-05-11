@@ -11,7 +11,7 @@ import static com.tinkoff.edu.decorator.MessageOrder.DESC;
 class Application {
     public static void main(String[] args) {
         Severity severity = Severity.randomSeverity();
-        Message[] messages = new Message[]{
+         Message[] messages = new Message[]{
                 new Message(severity, "Hello world!"),
                 new Message(severity, "Hello world!1"),
                 new Message(severity, "Hello world!1"),
@@ -21,7 +21,7 @@ class Application {
         MessageService service = new OrderedDistinctedMessageService(
                 new TimestampMessageDecorator(),
                 new ConsolePrinter());
-        service.log(message, messages);
+        //service.log(message, messages);
         service.log(DESC, message, messages);
         service.log(DESC, DISTINCT, message, messages);
     }
