@@ -1,17 +1,28 @@
-import com.tcs.edu.messageService.MessageService;
+import com.tcs.edu.decorator.TimestampMessageDecorator;
+import com.tcs.edu.domain.Message;
+import com.tcs.edu.interfaces.MessageService;
+import com.tcs.edu.messageService.OrderedDistinctedMessageService;
+import com.tcs.edu.printer.ConsolePrinter;
 import com.tinkoff.edu.decorator.Severity;
 
 import static com.tinkoff.edu.decorator.Doubling.DISTINCT;
-import static com.tinkoff.edu.decorator.MessageOrder.ASC;
+import static com.tinkoff.edu.decorator.MessageOrder.DESC;
 
 class Application {
     public static void main(String[] args) {
-        // for (int i = 1; i <= 5; i++) {
-        MessageService.process(
-                Severity.randomSeverity(), ASC, DISTINCT,
-                "Hello world!",
-                "Hello world 2!", null, "Hello world 3!", "Hello world 3!", "Hello world 5!");
-        // }
+        Severity severity = Severity.randomSeverity();
+        Message[] messages = new Message[]{
+                new Message(severity, "Hello world!"),
+                new Message(severity, "Hello world!1"),
+                new Message(severity, "Hello world!1"),
+                new Message(severity, "Hello world!2")
+        };
+        Message message = new Message(severity, "Hello world!");
+        MessageService service = new OrderedDistinctedMessageService(
+                new TimestampMessageDecorator(),
+                new ConsolePrinter());
+        service.log(message, messages);
+        service.log(DESC, message, messages);
+        service.log(DESC, DISTINCT, message, messages);
     }
 }
-

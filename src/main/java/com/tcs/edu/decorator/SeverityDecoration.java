@@ -17,7 +17,7 @@ public class SeverityDecoration {
      * Side effect: return severityString.
      */
 
-    public static String severityDecorate(Severity severity) {
+    public String severityDecorate(Severity severity) {
         String severityString = null;
         switch (severity) {
             case MAJOR:
