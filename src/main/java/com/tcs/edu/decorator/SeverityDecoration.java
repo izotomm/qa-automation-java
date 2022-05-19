@@ -30,6 +30,7 @@ public class SeverityDecoration {
                 severityString = "()";
                 break;
 
+
         }
         return severityString;
     }

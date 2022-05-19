@@ -2,6 +2,7 @@ package com.tcs.edu.decorator;
 
 import com.tcs.edu.domain.Message;
 import com.tcs.edu.interfaces.MessageDecorator;
+import com.tcs.edu.validated.LogException;
 import com.tcs.edu.validated.ValidatedService;
 
 import java.time.Instant;
@@ -23,19 +24,21 @@ public class TimestampMessageDecorator extends ValidatedService implements Messa
      * Method for outputting messages + system clock.
      */
     public String timestampDecorate(Message message) {
-        if (super.isArgsValid(message)) {
-            messageCount++;
-            String messageTimestampDecorate = String.format("%d %s %s", messageCount, Instant.now(), message.getBody());
-            String severityLevel = decoration.severityDecorate(message.getSeverity());
-            String glued = String.format("%s %s", messageTimestampDecorate, severityLevel);
-            if (messageCount % PAGE_SIZE == 0) {
-                glued = glued + "\n ---";
+        try {
+            if (super.isArgsValid(message)) {
+                messageCount++;
+                String messageTimestampDecorate = String.format("%d %s %s", messageCount, Instant.now(), message.getBody());
+                String severityLevel = decoration.severityDecorate(message.getSeverity());
+                String glued = String.format("%s %s", messageTimestampDecorate, severityLevel);
+                if (messageCount % PAGE_SIZE == 0) {
+                    glued = glued + "\n ---";
+                }
+                return glued;
             }
-            return glued;
+            return null;
+        } catch (IllegalArgumentException e) {
+            throw new LogException("Невалидное сообщение", e);
         }
-        return null;
-
     }
 
 }
-

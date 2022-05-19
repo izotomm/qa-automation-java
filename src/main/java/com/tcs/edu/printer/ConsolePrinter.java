@@ -16,7 +16,7 @@ public class ConsolePrinter implements Printer {
      *
      * @param message string value for outputting to console.
      */
-    public  void print(String message) {
+    public void print(String message) {
         System.out.println(message);
     }
 }

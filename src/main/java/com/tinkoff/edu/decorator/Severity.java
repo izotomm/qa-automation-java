@@ -13,4 +13,5 @@ public enum Severity {
     public static Severity randomSeverity() {
         return Severity.values()[RANDOM.nextInt(Severity.values().length)];
     }
+
 }

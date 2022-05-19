@@ -14,6 +14,11 @@ public class Message {
         this.body = body;
     }
 
+    public Message() {
+        body = "";
+
+    }
+
 
     public String getBody() {
         return body;
