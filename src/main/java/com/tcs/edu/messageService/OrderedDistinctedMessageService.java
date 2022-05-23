@@ -1,11 +1,9 @@
 package com.tcs.edu.messageService;
 
-import com.tcs.edu.decorator.TimestampMessageDecorator;
 import com.tcs.edu.domain.Message;
 import com.tcs.edu.interfaces.MessageDecorator;
 import com.tcs.edu.interfaces.MessageService;
 import com.tcs.edu.interfaces.Printer;
-import com.tcs.edu.printer.ConsolePrinter;
 import com.tinkoff.edu.decorator.Doubling;
 import com.tinkoff.edu.decorator.MessageOrder;
 
@@ -23,10 +21,10 @@ public class OrderedDistinctedMessageService implements MessageService {
     MessageDecorator decorator;
     Printer printer;
 
-    public OrderedDistinctedMessageService(TimestampMessageDecorator timestampMessageDecorator,
-                                           ConsolePrinter consolePrinter) {
+    public OrderedDistinctedMessageService(MessageDecorator messageDecorator,
+                                           Printer consolePrinter) {
         this.printer = consolePrinter;
-        this.decorator = timestampMessageDecorator;
+        this.decorator = messageDecorator;
     }
 
     /**
@@ -115,7 +113,6 @@ public class OrderedDistinctedMessageService implements MessageService {
         return false;
 
     }
-
 
 }
 
