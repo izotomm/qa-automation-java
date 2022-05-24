@@ -20,9 +20,10 @@ class Application {
         Message message = new Message(severity, "Hello world!");
         Message message1 = new Message(severity, null);
         Message message2 = new Message();
+        HashMapMessageRepository repository = new HashMapMessageRepository();
         MessageService service = new OrderedDistinctedMessageService(
                 new TimestampMessageDecorator(),
-                new HashMapMessageRepository());
+                repository);
         // new ConsolePrinter());
 //        try {
 //            service.log(message1);
@@ -38,6 +39,7 @@ class Application {
         service.log(message, messages);
         service.log(DESC, message, messages);
         service.log(DESC, DISTINCT, message, messages);
+        System.out.println(repository.toString());
 
     }
 

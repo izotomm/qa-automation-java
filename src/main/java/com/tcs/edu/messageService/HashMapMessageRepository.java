@@ -11,9 +11,21 @@ public class HashMapMessageRepository implements MessageRepository {
     private Map<UUID, Message> messages = new HashMap<>();
 
     @Override
+    public String toString() {
+        return "HashMapMessageRepository{" +
+                "messages=" + messages +
+                '}';
+    }
+
+    @Override
     public UUID create(Message message) {
         final UUID key = UUID.randomUUID();
         messages.put(key, message);
         return key;
+    }
+
+    @Override
+    public Message findByPrimaryKey(UUID key) {
+        return messages.get(key);
     }
 }

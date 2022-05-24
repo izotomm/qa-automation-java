@@ -21,7 +21,6 @@ public class Message {
 
     }
 
-
     public String getBody() {
         return body;
     }
@@ -39,15 +38,6 @@ public class Message {
     }
 
     @Override
-    public String toString() {
-        return "Message{" +
-                "severity=" + severity +
-                ", body='" + body + '\'' +
-                ", id=" + id +
-                '}';
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -58,6 +48,15 @@ public class Message {
     @Override
     public int hashCode() {
         return Objects.hash(severity, body);
+    }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "severity=" + severity +
+                ", body='" + body + '\'' +
+                ", id=" + id +
+                '}';
     }
 }
 
