@@ -5,6 +5,8 @@ import com.tcs.edu.messageService.HashMapMessageRepository;
 import com.tcs.edu.messageService.OrderedDistinctedMessageService;
 import com.tinkoff.edu.decorator.Severity;
 
+import java.util.UUID;
+
 import static com.tinkoff.edu.decorator.Doubling.DISTINCT;
 import static com.tinkoff.edu.decorator.MessageOrder.DESC;
 
@@ -39,8 +41,10 @@ class Application {
         service.log(message, messages);
         service.log(DESC, message, messages);
         service.log(DESC, DISTINCT, message, messages);
-        System.out.println(repository.toString());
+        //System.out.println(repository.toString());
 
+        final UUID key = service.log(message);
+        System.out.println(service.findByPrimaryKey(key));
     }
 
     //System.out.println(message.toString());

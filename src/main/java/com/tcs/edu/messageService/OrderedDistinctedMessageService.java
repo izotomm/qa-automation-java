@@ -35,7 +35,15 @@ public class OrderedDistinctedMessageService implements MessageService {
 
     /**
      * Вариант печати без MessageOrder и Doubling (базовый)
+     *
+     * @return
      */
+
+    public UUID log(Message message) {
+        UUID key = hashRepo.create(message);
+        return key;
+    }
+
     public void log(Message message, Message... messages) {
         // printer.print(decorator.timestampDecorate(message));
         // haspRepo.create(message);

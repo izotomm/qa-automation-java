@@ -7,6 +7,9 @@ import com.tinkoff.edu.decorator.MessageOrder;
 import java.util.UUID;
 
 public interface MessageService {
+
+    UUID log(Message message);
+
     void log(Message message, Message... messages);
 
     void log(MessageOrder order, Message message, Message... messages);
