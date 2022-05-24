@@ -9,13 +9,15 @@ import java.util.Collection;
 
 import static com.tinkoff.edu.decorator.Doubling.DISTINCT;
 import static com.tinkoff.edu.decorator.MessageOrder.DESC;
+import static com.tinkoff.edu.decorator.Severity.MAJOR;
 
 class Application {
     public static void main(String[] args) {
         Severity severity = Severity.randomSeverity();
+        Severity severity1 = Severity.randomSeverity();
         Message[] messages = new Message[]{new Message(severity, "Hello world!"), new Message(severity, "Hello world!1"), new Message(severity, "Hello world!1"), new Message(severity, "Hello world!2")};
         Message message = new Message(severity, "Hello world!");
-        Message message1 = new Message(severity, null);
+        Message message1 = new Message(severity1, "Hello world!");
         Message message2 = new Message();
         HashMapMessageRepository repository = new HashMapMessageRepository();
         MessageService service = new OrderedDistinctedMessageService(new TimestampMessageDecorator(), repository);
@@ -32,7 +34,7 @@ class Application {
 //        }
 
         service.log(message, messages);
-        service.log(DESC, message, messages);
+        service.log(DESC, message1, messages);
         service.log(DESC, DISTINCT, message, messages);
 //      System.out.println(repository.toString());
 //      final UUID key = service.log(message);
@@ -40,6 +42,12 @@ class Application {
 
         final Collection<Message> allMessages = service.findAll();
         for (Message current : allMessages) {
+            System.out.println(current);
+        }
+
+        System.out.println("______");
+        final Collection<Message> filterMessages = service.findBySeverity(MAJOR);
+        for (Message current : filterMessages) {
             System.out.println(current);
         }
 

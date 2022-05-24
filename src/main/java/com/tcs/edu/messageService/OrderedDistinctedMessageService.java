@@ -6,6 +6,7 @@ import com.tcs.edu.interfaces.MessageRepository;
 import com.tcs.edu.interfaces.MessageService;
 import com.tinkoff.edu.decorator.Doubling;
 import com.tinkoff.edu.decorator.MessageOrder;
+import com.tinkoff.edu.decorator.Severity;
 
 import java.util.Collection;
 import java.util.Objects;
@@ -38,6 +39,11 @@ public class OrderedDistinctedMessageService implements MessageService {
         return hashRepo.findAll();
     }
 
+    @Override
+    public Collection<Message> findBySeverity(Severity by) {
+        return hashRepo.findBySeverity(by);
+    }
+
 
     /**
      * Вариант печати без MessageOrder и Doubling (базовый)
@@ -52,7 +58,6 @@ public class OrderedDistinctedMessageService implements MessageService {
 
     public void log(Message message, Message... messages) {
         // printer.print(decorator.timestampDecorate(message));
-        // haspRepo.create(message);
         hashRepo.create(message);
         for (Message currentMessage : messages) {
             // printer.print(decorator.timestampDecorate(currentMessage));
