@@ -5,7 +5,7 @@ import com.tcs.edu.messageService.HashMapMessageRepository;
 import com.tcs.edu.messageService.OrderedDistinctedMessageService;
 import com.tinkoff.edu.decorator.Severity;
 
-import java.util.UUID;
+import java.util.Collection;
 
 import static com.tinkoff.edu.decorator.Doubling.DISTINCT;
 import static com.tinkoff.edu.decorator.MessageOrder.DESC;
@@ -13,19 +13,12 @@ import static com.tinkoff.edu.decorator.MessageOrder.DESC;
 class Application {
     public static void main(String[] args) {
         Severity severity = Severity.randomSeverity();
-        Message[] messages = new Message[]{
-                new Message(severity, "Hello world!"),
-                new Message(severity, "Hello world!1"),
-                new Message(severity, "Hello world!1"),
-                new Message(severity, "Hello world!2")
-        };
+        Message[] messages = new Message[]{new Message(severity, "Hello world!"), new Message(severity, "Hello world!1"), new Message(severity, "Hello world!1"), new Message(severity, "Hello world!2")};
         Message message = new Message(severity, "Hello world!");
         Message message1 = new Message(severity, null);
         Message message2 = new Message();
         HashMapMessageRepository repository = new HashMapMessageRepository();
-        MessageService service = new OrderedDistinctedMessageService(
-                new TimestampMessageDecorator(),
-                repository);
+        MessageService service = new OrderedDistinctedMessageService(new TimestampMessageDecorator(), repository);
         // new ConsolePrinter());
 //        try {
 //            service.log(message1);
@@ -41,10 +34,16 @@ class Application {
         service.log(message, messages);
         service.log(DESC, message, messages);
         service.log(DESC, DISTINCT, message, messages);
-        //System.out.println(repository.toString());
+//      System.out.println(repository.toString());
+//      final UUID key = service.log(message);
+//      System.out.println(service.findByPrimaryKey(key));
 
-        final UUID key = service.log(message);
-        System.out.println(service.findByPrimaryKey(key));
+        final Collection<Message> allMessages = service.findAll();
+        for (Message current : allMessages) {
+            System.out.println(current);
+        }
+
+
     }
 
     //System.out.println(message.toString());

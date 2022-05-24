@@ -7,6 +7,7 @@ import com.tcs.edu.interfaces.MessageService;
 import com.tinkoff.edu.decorator.Doubling;
 import com.tinkoff.edu.decorator.MessageOrder;
 
+import java.util.Collection;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -30,6 +31,11 @@ public class OrderedDistinctedMessageService implements MessageService {
 
     public Message findByPrimaryKey(UUID key) {
         return this.hashRepo.findByPrimaryKey(key);
+    }
+
+    @Override
+    public Collection<Message> findAll() {
+        return hashRepo.findAll();
     }
 
 

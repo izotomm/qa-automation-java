@@ -4,6 +4,7 @@ import com.tcs.edu.domain.Message;
 import com.tinkoff.edu.decorator.Doubling;
 import com.tinkoff.edu.decorator.MessageOrder;
 
+import java.util.Collection;
 import java.util.UUID;
 
 public interface MessageService {
@@ -17,4 +18,6 @@ public interface MessageService {
     void log(MessageOrder order, Doubling doubling, Message message, Message... messages);
 
     Message findByPrimaryKey(UUID key);
+
+    Collection<Message> findAll();
 }
