@@ -3,11 +3,13 @@ package com.tcs.edu.domain;
 import com.tinkoff.edu.decorator.Severity;
 
 import java.util.Objects;
+import java.util.UUID;
 
 public class Message {
 
     private Severity severity;
     private String body;
+    private UUID id;
 
     public Message(Severity severity, String body) {
         this.severity = severity;
@@ -18,7 +20,6 @@ public class Message {
         body = "";
 
     }
-
 
     public String getBody() {
         return body;
@@ -33,6 +34,7 @@ public class Message {
         return "Message{" +
                 "severity=" + severity +
                 ", body='" + body + '\'' +
+                ", id=" + id +
                 '}';
     }
 
