@@ -21,12 +21,21 @@ public class Message {
 
     }
 
+
     public String getBody() {
         return body;
     }
 
     public Severity getSeverity() {
         return severity;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     @Override
