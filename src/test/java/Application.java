@@ -5,11 +5,10 @@ import com.tcs.edu.messageService.HashMapMessageRepository;
 import com.tcs.edu.messageService.OrderedDistinctedMessageService;
 import com.tinkoff.edu.decorator.Severity;
 
-import java.util.Collection;
+import java.util.UUID;
 
 import static com.tinkoff.edu.decorator.Doubling.DISTINCT;
 import static com.tinkoff.edu.decorator.MessageOrder.DESC;
-import static com.tinkoff.edu.decorator.Severity.MAJOR;
 
 class Application {
     public static void main(String[] args) {
@@ -36,20 +35,20 @@ class Application {
         service.log(message, messages);
         service.log(DESC, message1, messages);
         service.log(DESC, DISTINCT, message, messages);
-//      System.out.println(repository.toString());
-//      final UUID key = service.log(message);
-//      System.out.println(service.findByPrimaryKey(key));
+        System.out.println(repository.toString());
+        final UUID key = service.log(message);
+        System.out.println(service.findByPrimaryKey(key));
 
-        final Collection<Message> allMessages = service.findAll();
-        for (Message current : allMessages) {
-            System.out.println(current);
-        }
-
-        System.out.println("______");
-        final Collection<Message> filterMessages = service.findBySeverity(MAJOR);
-        for (Message current : filterMessages) {
-            System.out.println(current);
-        }
+//        final Collection<Message> allMessages = service.findAll();
+//        for (Message current : allMessages) {
+//            System.out.println(current);
+//        }
+//
+//        System.out.println("______");
+//        final Collection<Message> filterMessages = service.findBySeverity(MAJOR);
+//        for (Message current : filterMessages) {
+//            System.out.println(current);
+//        }
 
 
     }

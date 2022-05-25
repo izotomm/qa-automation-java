@@ -58,10 +58,10 @@ public class OrderedDistinctedMessageService implements MessageService {
 
     public void log(Message message, Message... messages) {
         // printer.print(decorator.timestampDecorate(message));
-        hashRepo.create(message);
+        message.setId(hashRepo.create(message));
         for (Message currentMessage : messages) {
             // printer.print(decorator.timestampDecorate(currentMessage));
-            hashRepo.create(currentMessage);
+            currentMessage.setId(hashRepo.create(currentMessage));
         }
     }
 
@@ -75,12 +75,11 @@ public class OrderedDistinctedMessageService implements MessageService {
             //тут вывожу сообщения которые в варрарге задом наперед
             for (int counterMessages = messages.length - 1; counterMessages >= 0; counterMessages--) {
                 //printer.print(decorator.timestampDecorate(messages[counterMessages]));
-                hashRepo.create(messages[counterMessages]);
-                // messages[counterMessages].setId(haspRepo.create(messages[counterMessages]));
+                messages[counterMessages].setId(hashRepo.create(messages[counterMessages]));
             }
             //тут вывожу сообщение которое не в варрарге
             // printer.print(decorator.timestampDecorate(message));
-            hashRepo.create(message);
+            message.setId(hashRepo.create(message));
         } else if (order == ASC) {
             //тут использую process без order чтовы вывести сообщения в заданом порядке
             log(message, messages);
@@ -104,7 +103,7 @@ public class OrderedDistinctedMessageService implements MessageService {
                     //проверка если ли в массиве уже сообщение
                     if (!OrderedDistinctedMessageService.isMessagePrinted(messages[counterMessages], printMessages)) {
                         //printer.print(decorator.timestampDecorate(messages[counterMessages]));
-                        hashRepo.create(messages[counterMessages]);
+                        messages[counterMessages].setId(hashRepo.create(messages[counterMessages]));
                         //пихаю сообщение в массив
                         printMessages[counterMessages] = messages[counterMessages].getBody();
                     }
@@ -113,20 +112,20 @@ public class OrderedDistinctedMessageService implements MessageService {
                 //тут вывожу сообщение которое не в варрарге, сначала проверка на дубликат, потом печать
                 if (!OrderedDistinctedMessageService.isMessagePrinted(message, printMessages)) {
                     //printer.print(decorator.timestampDecorate(message));
-                    hashRepo.create(message);
+                    message.setId(hashRepo.create(message));
                 }
             }
             if (order == ASC) {
                 //вывод сообщения не в варарге + засовываю это сообещение в массив
                 //printer.print(decorator.timestampDecorate(message));
-                hashRepo.create(message);
+                message.setId(hashRepo.create(message));
                 printMessages[messages.length] = message.getBody();
 
                 //тут перебираю сообщения в варрге, печатаю и засовываю их в массив
                 for (int counterMessages = 0; counterMessages <= messages.length - 1; counterMessages++) {
                     if (!OrderedDistinctedMessageService.isMessagePrinted(messages[counterMessages], printMessages)) {
                         //printer.print(decorator.timestampDecorate(messages[counterMessages]));
-                        hashRepo.create(messages[counterMessages]);
+                        messages[counterMessages].setId(hashRepo.create(messages[counterMessages]));
                         printMessages[counterMessages] = messages[counterMessages].getBody();
                     }
                 }
