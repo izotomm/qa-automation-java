@@ -23,6 +23,7 @@ public class HashMapMessageRepository implements MessageRepository {
     @Override
     public UUID create(Message message) {
         final UUID key = UUID.randomUUID();
+        message.setId(key);
         messages.put(key, message);
         return key;
     }
