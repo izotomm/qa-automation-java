@@ -13,6 +13,7 @@ import java.util.UUID;
 
 import static com.tinkoff.edu.decorator.Doubling.DISTINCT;
 import static com.tinkoff.edu.decorator.MessageOrder.DESC;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class HashSetTest {
 
@@ -35,37 +36,29 @@ public class HashSetTest {
     public void shouldSaveElementWhenItDoesntExists() {
         service.log(message, messages);
 
-        Assertions.assertTrue(allMessages.contains(message));
-        Assertions.assertTrue(containsMessages());
-        Assertions.assertEquals(4, allMessages.size());
+        assertThat(allMessages)
+                .contains(message)
+                .contains(messages);
+        assertThat(4).isEqualTo(allMessages.size());
+
     }
 
     @Test
     public void shouldNotSaveElementWhenItDoesntExists() {
         service.log(DESC, DISTINCT, message, messages);
-        Assertions.assertEquals(2, allMessages.size());
+        assertThat(2).isEqualTo(allMessages.size());
     }
 
     @Test
     public void shouldGetElementByPrimaryKey() {
         final UUID key = service.log(message);
-        Assertions.assertTrue((service.findByPrimaryKey(key) != null));
+        assertThat(service.findByPrimaryKey(key) != null).isTrue();
     }
 
     @Test
     public void sh1oudGetErrorWhenMessageNull() {
-
         Assertions.assertThrows(NullPointerException.class, () -> service.log(null));
 
-    }
-
-
-    private boolean containsMessages() {
-
-        for (Message current : messages) {
-            if (!allMessages.contains(current)) return false;
-        }
-        return true;
     }
 
 }
