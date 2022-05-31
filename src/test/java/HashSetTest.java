@@ -4,9 +4,7 @@ import com.tcs.edu.interfaces.MessageService;
 import com.tcs.edu.messageService.HashMapMessageRepository;
 import com.tcs.edu.messageService.OrderedDistinctedMessageService;
 import com.tinkoff.edu.decorator.Severity;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.util.Collection;
 import java.util.UUID;
@@ -32,33 +30,40 @@ public class HashSetTest {
         allMessages = service.findAll();
     }
 
-    @Test
-    public void shouldSaveElementWhenItDoesntExists() {
-        service.log(message, messages);
+    @Nested
+    @DisplayName("checkHashElement")
+    class checkHashElement {
+        @Test
+        public void shouldSaveElementWhenItDoesntExists() {
+            service.log(message, messages);
 
-        assertThat(allMessages)
-                .contains(message)
-                .contains(messages);
-        assertThat(4).isEqualTo(allMessages.size());
+            assertThat(allMessages).contains(message).contains(messages);
+            assertThat(4).isEqualTo(allMessages.size());
 
-    }
+        }
 
-    @Test
-    public void shouldNotSaveElementWhenItDoesntExists() {
-        service.log(DESC, DISTINCT, message, messages);
-        assertThat(2).isEqualTo(allMessages.size());
-    }
+        @Test
+        public void shouldNotSaveElementWhenItDoesntExists() {
+            service.log(DESC, DISTINCT, message, messages);
+            assertThat(2).isEqualTo(allMessages.size());
+        }
 
-    @Test
-    public void shouldGetElementByPrimaryKey() {
-        final UUID key = service.log(message);
-        assertThat(service.findByPrimaryKey(key) != null).isTrue();
-    }
+        @Test
+        public void shouldGetElementByPrimaryKey() {
+            final UUID key = service.log(message);
+            assertThat(service.findByPrimaryKey(key) != null).isTrue();
+        }
 
-    @Test
-    public void sh1oudGetErrorWhenMessageNull() {
-        Assertions.assertThrows(NullPointerException.class, () -> service.log(null));
 
     }
 
+    @Nested
+    @DisplayName("checkError")
+    class checkError {
+        @Test
+        public void sh1oudGetErrorWhenMessageNull() {
+            Assertions.assertThrows(NullPointerException.class, () -> service.log(null));
+
+        }
+    }
 }
