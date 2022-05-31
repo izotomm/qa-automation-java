@@ -3,11 +3,13 @@ package com.tcs.edu.domain;
 import com.tinkoff.edu.decorator.Severity;
 
 import java.util.Objects;
+import java.util.UUID;
 
 public class Message {
 
     private Severity severity;
     private String body;
+    private UUID id;
 
     public Message(Severity severity, String body) {
         this.severity = severity;
@@ -19,7 +21,6 @@ public class Message {
 
     }
 
-
     public String getBody() {
         return body;
     }
@@ -28,12 +29,12 @@ public class Message {
         return severity;
     }
 
-    @Override
-    public String toString() {
-        return "Message{" +
-                "severity=" + severity +
-                ", body='" + body + '\'' +
-                '}';
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     @Override
@@ -47,6 +48,15 @@ public class Message {
     @Override
     public int hashCode() {
         return Objects.hash(severity, body);
+    }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "severity=" + severity +
+                ", body='" + body + '\'' +
+                ", id=" + id +
+                '}';
     }
 }
 
