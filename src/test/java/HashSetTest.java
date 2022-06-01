@@ -4,7 +4,10 @@ import com.tcs.edu.interfaces.MessageService;
 import com.tcs.edu.messageService.HashMapMessageRepository;
 import com.tcs.edu.messageService.OrderedDistinctedMessageService;
 import com.tinkoff.edu.decorator.Severity;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
 import java.util.UUID;
@@ -12,6 +15,7 @@ import java.util.UUID;
 import static com.tinkoff.edu.decorator.Doubling.DISTINCT;
 import static com.tinkoff.edu.decorator.MessageOrder.DESC;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class HashSetTest {
 
@@ -45,16 +49,16 @@ public class HashSetTest {
         @Test
         public void shouldNotSaveElementWhenItDoesntExists() {
             service.log(DESC, DISTINCT, message, messages);
+
             assertThat(2).isEqualTo(allMessages.size());
         }
 
         @Test
         public void shouldGetElementByPrimaryKey() {
             final UUID key = service.log(message);
+
             assertThat(service.findByPrimaryKey(key) != null).isTrue();
         }
-
-
     }
 
     @Nested
@@ -62,8 +66,9 @@ public class HashSetTest {
     class checkError {
         @Test
         public void sh1oudGetErrorWhenMessageNull() {
-            Assertions.assertThrows(NullPointerException.class, () -> service.log(null));
-
+            assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> {
+                service.log(null);
+            });
         }
     }
 }
