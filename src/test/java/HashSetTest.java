@@ -26,10 +26,11 @@ public class HashSetTest {
 
     @BeforeEach
     public void setUP() {
-        Severity severity = Severity.randomSeverity();
         HashMapMessageRepository repository = new HashMapMessageRepository();
-        message = new Message(severity, "Hello world!");
-        messages = new Message[]{new Message(severity, "Hello world!"), new Message(severity, "Hello world!1"), new Message(severity, "Hello world!1")};
+        message = new Message(Severity.randomSeverity(), "Hello world!");
+        messages = new Message[]{new Message(Severity.randomSeverity(), "Hello world!"),
+                new Message(Severity.randomSeverity(), "Hello world!1"),
+                new Message(Severity.randomSeverity(), "Hello world!1")};
         service = new OrderedDistinctedMessageService(new TimestampMessageDecorator(), repository);
         allMessages = service.findAll();
     }
@@ -42,22 +43,21 @@ public class HashSetTest {
             service.log(message, messages);
 
             assertThat(allMessages).contains(message).contains(messages);
-            assertThat(4).isEqualTo(allMessages.size());
+            assertThat(allMessages.size()).isEqualTo(4).as("количеств сообщений совпадает");
 
         }
 
         @Test
         public void shouldNotSaveElementWhenItDoesntExists() {
             service.log(DESC, DISTINCT, message, messages);
-
-            assertThat(2).isEqualTo(allMessages.size());
+            assertThat(allMessages.size()).isEqualTo(2).as("количеств сообщений совпадает");
+            ;
         }
 
         @Test
         public void shouldGetElementByPrimaryKey() {
             final UUID key = service.log(message);
-
-            assertThat(service.findByPrimaryKey(key) != null).isTrue();
+            assertThat(service.findByPrimaryKey(key)).isNotNull();
         }
     }
 
@@ -65,7 +65,7 @@ public class HashSetTest {
     @DisplayName("checkError")
     class checkError {
         @Test
-        public void sh1oudGetErrorWhenMessageNull() {
+        public void shouldGetErrorWhenMessageNull() {
             assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> {
                 service.log(null);
             });
