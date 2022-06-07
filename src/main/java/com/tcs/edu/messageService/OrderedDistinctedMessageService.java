@@ -58,7 +58,6 @@ public class OrderedDistinctedMessageService implements MessageService {
 
     public void log(Message message, Message... messages) {
         // printer.print(decorator.timestampDecorate(message));
-
         hashRepo.create(message);
         for (Message currentMessage : messages) {
             // printer.print(decorator.timestampDecorate(currentMessage));
